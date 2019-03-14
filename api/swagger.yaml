@@ -1,0 +1,289 @@
+---
+swagger: "2.0"
+info:
+  description: "Testing viability of OpenAPI2.0 for new URY API"
+  version: "1.0.0"
+  title: "TestAPI"
+host: "virtserver.swaggerhub.com"
+basePath: "/Skwunk/TestAPI/1.0.0"
+tags:
+- name: "quotes"
+  description: "Endpoints related to URY quotes board"
+schemes:
+- "https"
+- "http"
+consumes:
+- "application/json"
+- "application/xml"
+produces:
+- "application/json"
+- "application/xml"
+security:
+- APIKeyHeader: []
+paths:
+  /quotes:
+    get:
+      tags:
+      - "quotes"
+      summary: "gets a list of quotes"
+      operationId: "getAllQuotes"
+      produces:
+      - "application/json"
+      parameters: []
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Quote"
+        401:
+          description: "API key is missing or invalid"
+          headers:
+            WWW_Aunthenticate:
+              type: "string"
+      security:
+      - APIKeyQueryParam: []
+    post:
+      tags:
+      - "quotes"
+      summary: "create a new quote"
+      operationId: "addQuote"
+      parameters:
+      - in: "body"
+        name: "quote"
+        required: false
+        schema:
+          $ref: "#/definitions/Quote"
+        x-exportParamName: "Quote"
+      responses:
+        200:
+          description: "OK"
+        401:
+          description: "API key is missing or invalid"
+          headers:
+            WWW_Aunthenticate:
+              type: "string"
+      security:
+      - APIKeyQueryParam: []
+  /quotes/{quote_id}:
+    get:
+      tags:
+      - "quotes"
+      summary: "gets a single quote by quote Id"
+      operationId: "getQuote"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "quote_id"
+        in: "path"
+        required: true
+        type: "integer"
+        minimum: 1
+        x-exportParamName: "QuoteId"
+      responses:
+        200:
+          description: "OK"
+          schema:
+            $ref: "#/definitions/Quote"
+        401:
+          description: "API key is missing or invalid"
+          headers:
+            WWW_Aunthenticate:
+              type: "string"
+      security:
+      - APIKeyQueryParam: []
+    put:
+      tags:
+      - "quotes"
+      summary: "updates a single quote by quote Id"
+      operationId: "updateQuote"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "quote_id"
+        in: "path"
+        required: true
+        type: "integer"
+        minimum: 1
+        x-exportParamName: "QuoteId"
+      - in: "body"
+        name: "quote"
+        required: false
+        schema:
+          $ref: "#/definitions/Quote"
+        x-exportParamName: "Quote"
+      responses:
+        200:
+          description: "OK"
+        401:
+          description: "API key is missing or invalid"
+          headers:
+            WWW_Aunthenticate:
+              type: "string"
+      security:
+      - APIKeyQueryParam: []
+  /quotes/{quote_id}/text:
+    put:
+      tags:
+      - "quotes"
+      summary: "updates a quotes text field"
+      operationId: "updateQuoteText"
+      parameters:
+      - name: "quote_id"
+        in: "path"
+        required: true
+        type: "integer"
+        minimum: 1
+        x-exportParamName: "QuoteId"
+      - in: "body"
+        name: "text"
+        required: false
+        schema:
+          $ref: "#/definitions/text"
+        x-exportParamName: "Text"
+      responses:
+        200:
+          description: "OK"
+        401:
+          description: "API key is missing or invalid"
+          headers:
+            WWW_Aunthenticate:
+              type: "string"
+      security:
+      - APIKeyQueryParam: []
+  /quotes/{quote_id}/source:
+    put:
+      tags:
+      - "quotes"
+      summary: "updates a quotes source field"
+      operationId: "updateQuoteSource"
+      parameters:
+      - name: "quote_id"
+        in: "path"
+        required: true
+        type: "integer"
+        minimum: 1
+        x-exportParamName: "QuoteId"
+      - in: "body"
+        name: "source"
+        required: false
+        schema:
+          $ref: "#/definitions/source"
+        x-exportParamName: "Source"
+      responses:
+        200:
+          description: "OK"
+        401:
+          description: "API key is missing or invalid"
+          headers:
+            WWW_Aunthenticate:
+              type: "string"
+      security:
+      - APIKeyQueryParam: []
+  /quotes/{quote_id}/date:
+    put:
+      tags:
+      - "quotes"
+      summary: "updates a quotes date field"
+      operationId: "updateQuoteDate"
+      parameters:
+      - name: "quote_id"
+        in: "path"
+        required: true
+        type: "integer"
+        minimum: 1
+        x-exportParamName: "QuoteId"
+      - in: "body"
+        name: "date"
+        required: false
+        schema:
+          $ref: "#/definitions/date"
+        x-exportParamName: "Date"
+      responses:
+        200:
+          description: "OK"
+        401:
+          description: "API key is missing or invalid"
+          headers:
+            WWW_Aunthenticate:
+              type: "string"
+      security:
+      - APIKeyQueryParam: []
+  /quotes/{quote_id}/suspended:
+    put:
+      tags:
+      - "quotes"
+      summary: "updates a quotes suspended field"
+      operationId: "updateQuoteSuspended"
+      parameters:
+      - name: "quote_id"
+        in: "path"
+        required: true
+        type: "integer"
+        minimum: 1
+        x-exportParamName: "QuoteId"
+      - in: "body"
+        name: "suspended"
+        required: false
+        schema:
+          $ref: "#/definitions/suspended"
+        x-exportParamName: "Suspended"
+      responses:
+        200:
+          description: "OK"
+        401:
+          description: "API key is missing or invalid"
+          headers:
+            WWW_Aunthenticate:
+              type: "string"
+      security:
+      - APIKeyQueryParam: []
+securityDefinitions:
+  APIKeyHeader:
+    type: "apiKey"
+    name: "X-API-Key"
+    in: "header"
+  APIKeyQueryParam:
+    type: "apiKey"
+    name: "api_key"
+    in: "query"
+definitions:
+  Quote:
+    properties:
+      quote_id:
+        type: "integer"
+      text:
+        type: "string"
+      source:
+        type: "integer"
+      date:
+        type: "string"
+      suspended:
+        type: "boolean"
+    example:
+      date: "date"
+      quote_id: 0
+      text: "text"
+      source: 6
+      suspended: true
+  text:
+    properties:
+      text:
+        type: "string"
+  source:
+    properties:
+      source:
+        type: "integer"
+  date:
+    properties:
+      date:
+        type: "string"
+  suspended:
+    properties:
+      suspended:
+        type: "boolean"
+responses:
+  401:
+    description: "API key is missing or invalid"
+    headers:
+      WWW_Aunthenticate:
+        type: "string"

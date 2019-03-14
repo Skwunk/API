@@ -15,6 +15,7 @@ schemes:
 consumes:
 - "application/json"
 - "application/xml"
+- "text/plain"
 produces:
 - "application/json"
 - "application/xml"
@@ -138,8 +139,9 @@ paths:
         name: "text"
         required: false
         schema:
-          $ref: "#/definitions/text"
+          type: "string"
         x-exportParamName: "Text"
+        x-optionalDataType: "String"
       responses:
         200:
           description: "OK"
@@ -167,8 +169,9 @@ paths:
         name: "source"
         required: false
         schema:
-          $ref: "#/definitions/source"
+          type: "integer"
         x-exportParamName: "Source"
+        x-optionalDataType: "Int32"
       responses:
         200:
           description: "OK"
@@ -196,8 +199,9 @@ paths:
         name: "date"
         required: false
         schema:
-          $ref: "#/definitions/date"
+          type: "string"
         x-exportParamName: "Date"
+        x-optionalDataType: "String"
       responses:
         200:
           description: "OK"
@@ -225,8 +229,9 @@ paths:
         name: "suspended"
         required: false
         schema:
-          $ref: "#/definitions/suspended"
+          type: "boolean"
         x-exportParamName: "Suspended"
+        x-optionalDataType: "Bool"
       responses:
         200:
           description: "OK"
@@ -265,22 +270,6 @@ definitions:
       text: "text"
       source: 6
       suspended: true
-  text:
-    properties:
-      text:
-        type: "string"
-  source:
-    properties:
-      source:
-        type: "integer"
-  date:
-    properties:
-      date:
-        type: "string"
-  suspended:
-    properties:
-      suspended:
-        type: "boolean"
 responses:
   401:
     description: "API key is missing or invalid"

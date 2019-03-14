@@ -1,2 +1,2 @@
 # API
-A trail of the new URY API
+A trial of the new URY API

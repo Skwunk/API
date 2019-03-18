@@ -18,6 +18,7 @@ import (
 func main() {
 	log.Printf("Server started")
 
+	sw.NewDatabaseConnection()
 	router := sw.NewRouter()
 
 	log.Fatal(http.ListenAndServe(":8080", router))

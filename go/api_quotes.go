@@ -10,8 +10,8 @@
 package testapi
 
 import (
+	"encoding/json"
 	"log"
-	"strconv"
 	"net/http"
 )
 
@@ -21,26 +21,24 @@ func AddQuote(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetAllQuotes(w http.ResponseWriter, r *http.Request) {
-	var (
-		quote_id	int
-		text		string
-		source		int
-		date		string
-		suspended	bool
-	)
 	rows, err := Database.Query("SELECT * FROM quotes")
 	if err != nil {
 		log.Fatal(err)
 	}
 	defer rows.Close()
+
+	var quotes []Quote
 	for rows.Next() {
-		err := rows.Scan(&quote_id, &text, &source, &date, &suspended)
+		var quote Quote
+		err := rows.Scan(&quote.QuoteId, &quote.Text, &quote.Source, &quote.Date, &quote.Suspended)
 		if err != nil {
 			log.Fatal(err)
 		}
-		log.Printf(strconv.Itoa(quote_id), text, strconv.Itoa(source), date, suspended)
+		quotes = append(quotes, quote)
 	}
+	
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	json.NewEncoder(w).Encode(quotes)
 	w.WriteHeader(http.StatusOK)
 }
 

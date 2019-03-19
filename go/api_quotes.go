@@ -117,11 +117,37 @@ func UpdateQuoteSource(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateQuoteSuspended(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	decoder := json.NewDecoder(r.Body)
+	var quote Quote
+	err := decoder.Decode(&quote)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, err = Database.Query(`UPDATE quotes SET suspended = $1 WHERE quote_id = $2`, quote.Suspended, params["quote_id"])
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }
 
 func UpdateQuoteText(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	decoder := json.NewDecoder(r.Body)
+	var quote Quote
+	err := decoder.Decode(&quote)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, err = Database.Query(`UPDATE quotes SET text = $1 WHERE quote_id = $2`, quote.Text, params["quote_id"])
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }

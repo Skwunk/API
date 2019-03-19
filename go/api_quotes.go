@@ -13,6 +13,7 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"github.com/gorilla/mux"
 )
 
 func AddQuote(w http.ResponseWriter, r *http.Request) {
@@ -55,7 +56,22 @@ func GetAllQuotes(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetQuote(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	rows, err := Database.Query("SELECT * FROM quotes WHERE quote_id = $1", params["quote_id"])
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer rows.Close()
+
+	var quote Quote
+	rows.Next()
+	err = rows.Scan(&quote.QuoteId, &quote.Text, &quote.Source, &quote.Date, &quote.Suspended)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+	json.NewEncoder(w).Encode(quote)
 	w.WriteHeader(http.StatusOK)
 }
 

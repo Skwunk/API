@@ -76,6 +76,19 @@ func GetQuote(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateQuote(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	decoder := json.NewDecoder(r.Body)
+	var quote Quote
+	err := decoder.Decode(&quote)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, err = Database.Query(`UPDATE quotes SET text = $1, source = $2, suspended = $3 WHERE quote_id = $4`, quote.Text, quote.Source, quote.Suspended, params["quote_id"])
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }

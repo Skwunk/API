@@ -99,6 +99,19 @@ func UpdateQuoteDate(w http.ResponseWriter, r *http.Request) {
 }
 
 func UpdateQuoteSource(w http.ResponseWriter, r *http.Request) {
+	params := mux.Vars(r)
+	decoder := json.NewDecoder(r.Body)
+	var quote Quote
+	err := decoder.Decode(&quote)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	_, err = Database.Query(`UPDATE quotes SET source = $1 WHERE quote_id = $2`, quote.Source, params["quote_id"])
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }

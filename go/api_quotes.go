@@ -16,6 +16,18 @@ import (
 )
 
 func AddQuote(w http.ResponseWriter, r *http.Request) {
+	decoder := json.NewDecoder(r.Body)
+	var quote Quote
+	err := decoder.Decode(&quote)
+	if err != nil {
+		log.Fatal(err)
+	}
+	
+	_, err = Database.Query(`INSERT INTO quotes(text, source, suspended) VALUES ($1, $2, $3)`, quote.Text, quote.Source, quote.Suspended)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.WriteHeader(http.StatusOK)
 }

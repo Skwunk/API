@@ -11,13 +11,13 @@ package testapi
 
 type Quote struct {
 
-	QuoteId int32 `json:"quote_id,omitempty"`
+	QuoteId int32 `json:"quote_id"`
 
-	Text string `json:"text,omitempty"`
+	Text string `json:"text"`
 
-	Source int32 `json:"source,omitempty"`
+	Source int32 `json:"source"`
 
-	Date string `json:"date,omitempty"`
+	Date string `json:"date"`
 
-	Suspended bool `json:"suspended,omitempty"`
+	Suspended bool `json:"suspended"`
 }

@@ -11,7 +11,7 @@ var Database *sql.DB
 func databaseConnection(c *Config) (*sql.DB) {
 	log.Printf(c.User, c.Password, c.DBName)
 	//connstr := "user=web password=123456789 dbname=pqgotest sslmode=disable"
-	connstr := "user=" + c.User + " password=" + c.Password + " dbname=" + c.DBName + " sslmode= disable"
+	connstr := "user=" + c.User + " password=" + c.Password + " dbname=" + c.DBName + " sslmode= " + c.SSLMode
 	log.Printf(connstr)
 	db, err := sql.Open("postgres", connstr)
 	if err != nil {

@@ -51,63 +51,63 @@ var routes = Routes{
 	Route{
 		"Index",
 		"GET",
-		"/Skwunk/TestAPI/1.0.0/",
+		"/PrototypeAPI/",
 		Index,
 	},
 
 	Route{
 		"AddQuote",
 		strings.ToUpper("Post"),
-		"/Skwunk/TestAPI/1.0.0/quotes",
+		"/PrototypeAPI/quotes",
 		AddQuote,
 	},
 
 	Route{
 		"GetAllQuotes",
 		strings.ToUpper("Get"),
-		"/Skwunk/TestAPI/1.0.0/quotes",
+		"/PrototypeAPI/quotes",
 		GetAllQuotes,
 	},
 
 	Route{
 		"GetQuote",
 		strings.ToUpper("Get"),
-		"/Skwunk/TestAPI/1.0.0/quotes/{quote_id}",
+		"/PrototypeAPI/quotes/{quote_id}",
 		GetQuote,
 	},
 
 	Route{
 		"UpdateQuote",
 		strings.ToUpper("Put"),
-		"/Skwunk/TestAPI/1.0.0/quotes/{quote_id}",
+		"/PrototypeAPI/quotes/{quote_id}",
 		UpdateQuote,
 	},
 
 	Route{
 		"UpdateQuoteDate",
 		strings.ToUpper("Put"),
-		"/Skwunk/TestAPI/1.0.0/quotes/{quote_id}/date",
+		"/PrototypeAPI/quotes/{quote_id}/date",
 		UpdateQuoteDate,
 	},
 
 	Route{
 		"UpdateQuoteSource",
 		strings.ToUpper("Put"),
-		"/Skwunk/TestAPI/1.0.0/quotes/{quote_id}/source",
+		"/PrototypeAPI/quotes/{quote_id}/source",
 		UpdateQuoteSource,
 	},
 
 	Route{
 		"UpdateQuoteSuspended",
 		strings.ToUpper("Put"),
-		"/Skwunk/TestAPI/1.0.0/quotes/{quote_id}/suspended",
+		"/PrototypeAPI/quotes/{quote_id}/suspended",
 		UpdateQuoteSuspended,
 	},
 
 	Route{
 		"UpdateQuoteText",
 		strings.ToUpper("Put"),
-		"/Skwunk/TestAPI/1.0.0/quotes/{quote_id}/text",
+		"/PrototypeAPI/quotes/{quote_id}/text",
 		UpdateQuoteText,
 	},
 }

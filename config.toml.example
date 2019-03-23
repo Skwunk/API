@@ -1,0 +1,3 @@
+user = "web"
+password = "123456789"
+dbname = "pqgotest"

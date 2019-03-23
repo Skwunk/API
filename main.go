@@ -12,13 +12,20 @@ package main
 import (
 	"log"
 	"net/http"
+	"github.com/BurntSushi/toml"
 	sw "github.com/Skwunk/API/go"
 )
 
 func main() {
 	log.Printf("Server started")
 
-	sw.NewDatabaseConnection()
+	config := &sw.Config{}
+	_, err := toml.DecodeFile("config.toml", config)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	sw.NewDatabaseConnection(config)
 	router := sw.NewRouter()
 
 	log.Fatal(http.ListenAndServe(":8080", router))

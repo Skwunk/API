@@ -8,8 +8,11 @@ import (
 
 var Database *sql.DB
 
-func databaseConnection() (*sql.DB) {
-	connstr := "user=web password=123456789 dbname=pqgotest sslmode=disable"
+func databaseConnection(c *Config) (*sql.DB) {
+	log.Printf(c.User, c.Password, c.DBName)
+	//connstr := "user=web password=123456789 dbname=pqgotest sslmode=disable"
+	connstr := "user=" + c.User + " password=" + c.Password + " dbname=" + c.DBName + " sslmode= disable"
+	log.Printf(connstr)
 	db, err := sql.Open("postgres", connstr)
 	if err != nil {
 		log.Fatal(err)
@@ -19,6 +22,6 @@ func databaseConnection() (*sql.DB) {
 	return db
 }
 
-func NewDatabaseConnection() {
-	Database = databaseConnection()
+func NewDatabaseConnection(c *Config) {
+	Database = databaseConnection(c)
 }

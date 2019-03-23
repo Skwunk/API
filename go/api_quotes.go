@@ -24,7 +24,7 @@ func AddQuote(w http.ResponseWriter, r *http.Request) {
 		log.Fatal(err)
 	}
 	
-	_, err = Database.Query(`INSERT INTO quotes(text, source, suspended) VALUES ($1, $2, $3)`, quote.Text, quote.Source, quote.Suspended)
+	_, err = Database.Query(`INSERT INTO quotes(text, source) VALUES ($1, $2)`, quote.Text, quote.Source)
 	if err != nil {
 		log.Fatal(err)
 	}

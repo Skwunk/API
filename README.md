@@ -1,2 +1,2 @@
 # API
-A trial of the new URY API
+A test of the viability of a new URY API

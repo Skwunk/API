@@ -1,4 +1,4 @@
-# Go API Server for testapi
+# Go API Server for prototypeapi
 
 Testing viability of OpenAPI2.0 for new URY API
 

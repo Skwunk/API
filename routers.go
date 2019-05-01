@@ -13,8 +13,8 @@ import (
 	"net/http"
 	"strings"
 	"github.com/gorilla/mux"
-	ep "github.com/Skwunk/API/endpoints"
-	ut "github.com/Skwunk/API/utils"
+	ep "github.com/Skwunk/PrototypeAPI/endpoints"
+	ut "github.com/Skwunk/PrototypeAPI/utils"
 )
 
 type Route struct {

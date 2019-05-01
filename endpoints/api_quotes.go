@@ -14,8 +14,8 @@ import (
 	"log"
 	"net/http"
 	"github.com/gorilla/mux"
-	md "github.com/Skwunk/API/models"
-	ut "github.com/Skwunk/API/utils"
+	md "github.com/Skwunk/PrototypeAPI/models"
+	ut "github.com/Skwunk/PrototypeAPI/utils"
 )
 
 func AddQuote(w http.ResponseWriter, r *http.Request) {

@@ -13,7 +13,7 @@ import (
 	"log"
 	"net/http"
 	"github.com/BurntSushi/toml"
-	ut "github.com/Skwunk/API/utils"
+	ut "github.com/Skwunk/PrototypeAPI/utils"
 )
 
 func main() {

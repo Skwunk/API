@@ -5,4 +5,5 @@ type Config struct {
 	Password	string `toml:"password"`
 	DBName		string `toml:"dbname"`
 	SSLMode		string `toml:"sslmode"`
+	Memcache	string 	`toml:"memcache"`
 }

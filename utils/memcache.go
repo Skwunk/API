@@ -10,6 +10,7 @@ var Memcache *memcache.Client
 
 func NewMemcacheClient(c *Config) {
 	Memcache = memcache.New(c.Memcache)
+	log.Printf("Memcache connected")
 }
 
 func test() {

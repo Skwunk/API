@@ -10,10 +10,13 @@
 package endpoints
 
 import (
+	"bytes"
 	"encoding/json"
+	"encoding/gob"
 	"log"
 	"net/http"
 	"github.com/gorilla/mux"
+	memcache "github.com/bradfitz/gomemcache/memcache"
 	md "github.com/Skwunk/PrototypeAPI/models"
 	ut "github.com/Skwunk/PrototypeAPI/utils"
 )
@@ -36,25 +39,35 @@ func AddQuote(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetAllQuotes(w http.ResponseWriter, r *http.Request) {
-	rows, err := ut.Database.Query("SELECT * FROM quotes")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer rows.Close()
-
 	var quotes []md.Quote
-	for rows.Next() {
-		var quote md.Quote
-		err := rows.Scan(&quote.QuoteId, &quote.Text, &quote.Source, &quote.Date, &quote.Suspended)
+	var network bytes.Buffer
+	data, err := ut.Memcache.Get("SQL:GetAllQuotes")
+	if err != nil {
+		log.Print(err)
+		rows, err := ut.Database.Query("SELECT * FROM quotes")
 		if err != nil {
-			log.Fatal(err)
+			log.Print(err)
 		}
-		quotes = append(quotes, quote)
+		defer rows.Close()
+		for rows.Next() {
+			var quote md.Quote
+			err := rows.Scan(&quote.QuoteId, &quote.Text, &quote.Source, &quote.Date, &quote.Suspended)
+			if err != nil {
+				log.Print(err)
+			}
+			quotes = append(quotes, quote)
+		}
+		enc := gob.NewEncoder(&network)
+		enc.Encode(quotes)
+		ut.Memcache.Set(&memcache.Item{Key:"SQL:GetAllQuotes", Value: network.Bytes()})
+	} else {
+		log.Printf("memcache: cache hit")
+		network.Write(data.Value)
+		dec := gob.NewDecoder(&network)
+		dec.Decode(&quotes)
 	}
-	
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	json.NewEncoder(w).Encode(quotes)
-	w.WriteHeader(http.StatusOK)
 }
 
 func GetQuote(w http.ResponseWriter, r *http.Request) {
@@ -74,7 +87,6 @@ func GetQuote(w http.ResponseWriter, r *http.Request) {
 
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	json.NewEncoder(w).Encode(quote)
-	w.WriteHeader(http.StatusOK)
 }
 
 func UpdateQuote(w http.ResponseWriter, r *http.Request) {
